@@ -1,0 +1,9 @@
+#ifndef PINMAP_H
+#define PINMAP_H
+/* STM32F103C8T6 Blue Pill reference wiring.
+ * ST7735: PA5 SPI1_SCK, PA7 SPI1_MOSI, PA4 CS, PB0 DC, PB1 RST
+ * Buttons (active-low/pullup): PB12 LEFT, PB13 RIGHT, PB14 ROTATE,
+ * PB15 DOWN, PA8 PAUSE, PB10 HARD_DROP.
+ * Buzzer TIM4_CH1 PB6; USART1 PA9 TX / PA10 RX; SWD PA13/PA14.
+ */
+#endif
