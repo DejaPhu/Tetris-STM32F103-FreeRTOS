@@ -1,7 +1,5 @@
-# Tetris STM32F103C8T6 + FreeRTOS — PROJECT SKELETON
+# Tetris STM32F103C8T6 + FreeRTOS 
 
-**Giai đoạn: khởi tạo bộ khung. Chưa có mã nguồn, firmware, driver, .ioc hoặc Task chạy thật.**
-Ba thành viên tự viết code trong nhánh riêng, mở Pull Request và chờ review.
 
 ## Phần cứng dự kiến
 - STM32F103C8T6 Blue Pill, 72 MHz, RAM 20 KB
