@@ -1,24 +1,17 @@
-# Kiến trúc FreeRTOS — dự kiến, chưa implement
+# Kiến trúc tích hợp
 
-```text
-6 Buttons / GPIO
-    |
-    v
-InputTask -- xInputQueue --> GameTask (Tetris + FSM)
-                                |
-                                +--> PWM Buzzer
-                                |
-                                v
-                           xFrameQueue
-                                |
-                                v
-                            DisplayTask --> I2C1 OLED
+```mermaid
+flowchart LR
+ GPIO[6 nút GPIO] --> Input[InputTask 10 ms]
+ Input -->|Queue 16 x uint16_t| Game[GameTask: FSM và engine]
+ Game --> PWM[TIM4 PWM]
+ Game --> Snapshot[Snapshot có critical section]
+ Game -->|Queue 1 x uint16_t token| Display[DisplayTask 160 ms]
+ Snapshot --> Display
+ Display --> Render[Renderer 1024 byte]
+ Render --> OLED[SSD1306 I2C1]
 ```
 
-- InputTask: khoảng 10 ms; chỉ đọc phím và phát sự kiện.
-- GameTask: khoảng 20 ms; sở hữu trạng thái gameplay, menu, điểm và WIN.
-- DisplayTask: khoảng 100 ms; nhận bản sao frame, vẽ đơn sắc SSD1306.
-- Queue sự kiện phím (dự kiến 16 phần tử) và mailbox frame (dự kiến 1 phần tử).
-- Không Task nào khác thay đổi dữ liệu game; tránh dùng framebuffer màu toàn màn hình.
+Task/Queue được tạo duy nhất trong main.c bởi CubeMX. Không thêm Task diagnostics hoặc buzzer. Ba wrapper gọi module trong USER CODE. GameTask ngủ tối đa 20 ms, thức sớm theo deadline gravity. RTOS SysTick 1 kHz; HAL tick TIM2. Chỉ DisplayTask truy cập I2C1, chỉ GameTask điều khiển game/PWM. Kernel còn Idle/Timer service nội bộ.
 
-**Chưa có code Task/Queue trong bộ khung.**
+Xem docs/MODULES.md và docs/test-results/SYSTEM_V1.md; chưa kiểm thử board.

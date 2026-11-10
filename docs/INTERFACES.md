@@ -1,14 +1,12 @@
-# Đặc tả giao diện module (chưa có code)
+# Giao diện tích hợp
 
-| Module dự kiến | Người viết | Nhiệm vụ |
-|---|---|---|
-| hal_buttons.h/.c, hal_uart.h/.c | TV1 | GPIO, UART |
-| hal_buzzer.h/.c | TV2 | TIM4 PWM |
-| hal_oled.h/.c | TV3 | SSD1306 I2C |
-| task_input.h/.c | TV1 | Đọc nút, debounce, gửi Queue |
-| task_game.h/.c | TV2 | Luật Tetris, FSM, điều kiện thắng |
-| game_engine.h/.c, game_fsm.h/.c | TV2 | Logic thuần C, trạng thái |
-| task_display.h/.c, ui_renderer.h/.c | TV3 | Menu + OLED |
-| app_ipc.h/.c, app_cfg.h | Thống nhất cả nhóm | Queue, kiểu dữ liệu, chu kỳ và stack |
+Contract công khai: app/inc/app_shared.h; task_input_run, task_game_run, task_display_run, app_game_copy_snapshot.
 
-Thống nhất định dạng InputEvent, GameFrame, enum state và API trước khi viết module. Leader là người duy nhất chỉnh cấu hình CubeMX. Các thành viên không tự generate đè .ioc và không tạo duplicate Tasks.
+- Queue handles được định nghĩa trong main.c; không tạo/định nghĩa lại.
+- Queue input: uint16_t; low byte mã BTN_*, bit 8 repeat. Không gửi con trỏ hoặc struct vào Queue.
+- Queue frame: uint16_t token 1; nếu đầy không cần thêm token vì snapshot luôn được cập nhật.
+- Snapshot: board có overlay khối đang rơi, score/lines/level, next piece, menu index, state, difficulty. Display chỉ sao chép qua app_game_copy_snapshot; không đọc Engine_t.
+- game_internal.h là private cho engine/FSM/GameTask. Không dùng trong Input/Display.
+- HAL OLED/buzzer, renderer, filter và diagnostics có header riêng; xem docs/MODULES.md.
+
+Không đổi chân, số Task hoặc kiểu Queue trong bản tích hợp. Quyền sở hữu nhánh Task giữ nguyên; bản tích hợp là ứng viên review, không tự merge.

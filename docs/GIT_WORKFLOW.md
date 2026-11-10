@@ -11,7 +11,7 @@
 - TV1: feature/hal-gpio-uart, feature/task-input
 - TV2: feature/hal-timer-buzzer, feature/task-game
 - TV3: feature/hal-i2c-oled, feature/task-display
-- Leader: feature/config-cubemx-oled (khởi tạo .ioc và dự án CubeIDE)
+- Leader: feature/config-cubemx-oled (khởi tạo .ioc và dự án Keil)
 
 ## Vòng đời code
 1. Cập nhật develop rồi làm trên nhánh feature của mình.

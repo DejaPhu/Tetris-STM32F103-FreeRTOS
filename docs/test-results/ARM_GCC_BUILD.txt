@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+  19644	    136	  14984	  34764	   87cc	build/gcc/tetris.elf

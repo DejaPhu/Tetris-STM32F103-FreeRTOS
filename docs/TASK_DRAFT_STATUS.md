@@ -1,3 +1,7 @@
+# Lịch sử bản nháp
+
+Tài liệu bên dưới mô tả các PR nhập nháp ban đầu, không phải trạng thái integration hiện tại. Các lỗi đã sửa và việc ghép module được ghi trong README.md, docs/MODULES.md và docs/test-results/SYSTEM_V1.md. Chưa có kiểm thử board.
+
 # Ba Task: bản nháp để review, chưa tích hợp
 
 Nguồn: task_drafts trong GOI_BAN_GIAO_CODEX_TETRIS.zip do người dùng cung cấp. Được người dùng cho phép đưa lên GitHub. Giữ nguyên nội dung bốn tệp C/header, chưa sửa thuật toán. Các PR riêng: API chung, InputTask, GameTask, DisplayTask.
