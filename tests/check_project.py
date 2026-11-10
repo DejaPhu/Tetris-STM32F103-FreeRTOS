@@ -12,10 +12,13 @@ for n in t.iter('IncludePath'):
   if p:assert (base/p).is_dir(),p
 for name,start,size in [('IROM','0x08000000','0x10000'),('IRAM','0x20000000','0x5000')]:
  n=t.find('.//OnChipMemories/'+name);assert int(n.findtext('StartAddress'),16)==int(start,16);assert n.findtext('Size')==size
-s=(r/'Teris/Core/Src/main.c').read_text()
+s=(r/'main.c').read_text()
 assert len(re.findall(r'\bosThreadNew\s*\(',s))==3
 assert len(re.findall(r'\bosMessageQueueNew\s*\(',s))==2
 assert len(re.findall(r'\bosKernelStart\s*\(',s))==1
 for name in ['input','game','display']:assert 'task_'+name+'_run(argument);' in s
-for f in (r/'app/src').glob('*.c'):assert f.resolve() in files;assert 'HAL_Delay(' not in f.read_text()
+for folder in ['app/src','hal/src']:
+ for f in (r/folder).glob('*.c'):assert f.resolve() in files;assert 'HAL_Delay(' not in f.read_text()
 print('PASS: Keil source/include/memory references; exactly 3 application Tasks, 2 queues, 1 kernel start')
+
+for folder in ["bsp/inc","bsp/src","hal/inc","hal/src","middlewares/FreeRTOS","app/inc","app/src"]:assert (r/folder).is_dir()

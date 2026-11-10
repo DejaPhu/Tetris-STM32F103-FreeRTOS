@@ -2,7 +2,7 @@
 
 ## Build/nạp
 
-1. Dùng toàn bộ checkout integration; mở `Teris/MDK-ARM/Teris.uvprojx`. Xác nhận include `../../app/inc`; 10 nguồn ứng dụng trong group Application/Tetris và các nguồn nền không trùng.
+1. Dùng toàn bộ checkout integration; mở `Teris/MDK-ARM/Teris.uvprojx`. Xác nhận include `../../app/inc`; nguồn ứng dụng trong group Application/Tasks and Engine và driver trong HAL/Board peripherals và các nguồn nền không trùng.
 2. Chọn Arm Compiler 5 tương thích port RVDS/ARM_CM3. Nếu máy chỉ có Compiler 6, cần cài compiler phù hợp hoặc migration riêng được review; không chỉ đổi dropdown và giả định port tương thích.
 3. Kiểm tra IROM1 0x08000000/0x10000 và IRAM1 0x20000000/0x5000. Rebuild All, không lỗi; phân loại warning. Flash = Code+RO-data+RW-data; RAM = RW-data+ZI-data. Giữ nguyên heap 8192 và stack ứng dụng 768/1280/1536 byte trước khi có số đo.
 4. ST-Link: chung GND, VTref/nguồn đúng mức 3.3 V, PA13 SWDIO, PA14 SWCLK; có thể nối NRST. BOOT0=0. Chọn ST-Link Debugger, SWD, tốc độ ban đầu 1 MHz; flash algorithm STM32F10x medium-density. Download → Verify → Reset/Run.

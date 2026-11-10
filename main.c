@@ -53,22 +53,22 @@ UART_HandleTypeDef huart1;
 osThreadId_t InputTaskHandle;
 const osThreadAttr_t InputTask_attributes = {
   .name = "InputTask",
-  .stack_size = 192 * 4,
-  .priority = (osPriority_t) osPriorityNormal3,
+  .stack_size = APP_INPUT_STACK_BYTES,
+  .priority = (osPriority_t) APP_INPUT_PRIORITY,
 };
 /* Definitions for GameTask */
 osThreadId_t GameTaskHandle;
 const osThreadAttr_t GameTask_attributes = {
   .name = "GameTask",
-  .stack_size = 320 * 4,
-  .priority = (osPriority_t) osPriorityNormal2,
+  .stack_size = APP_GAME_STACK_BYTES,
+  .priority = (osPriority_t) APP_GAME_PRIORITY,
 };
 /* Definitions for DisplayTask */
 osThreadId_t DisplayTaskHandle;
 const osThreadAttr_t DisplayTask_attributes = {
   .name = "DisplayTask",
-  .stack_size = 384 * 4,
-  .priority = (osPriority_t) osPriorityNormal1,
+  .stack_size = APP_DISPLAY_STACK_BYTES,
+  .priority = (osPriority_t) APP_DISPLAY_PRIORITY,
 };
 /* Definitions for xInputQueue */
 osMessageQueueId_t xInputQueueHandle;

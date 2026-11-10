@@ -26,3 +26,6 @@ Thumbs.db
 *.lst
 *.uvguix.*
 *.uvoptx
+
+# CubeMX generated IDE metadata
+.mxproject

@@ -8,17 +8,8 @@
 #include <stdint.h>
 #include "cmsis_os2.h"
 
-#define TETRIS_COLS          10U
-#define TETRIS_ROWS          20U
-#define TETRIS_WIN_SCORE     1000UL
-#define TETRIS_INPUT_PERIOD_MS   10U
-#define TETRIS_GAME_PERIOD_MS    20U
-#define TETRIS_DISPLAY_PERIOD_MS 160U /* OLED 100-kHz I2C: full frame ~100 ms */
-
-/* These are already defined by CubeMX in Core/Src/main.c. */
-extern osMessageQueueId_t xInputQueueHandle;
-extern osMessageQueueId_t xFrameQueueHandle;
-
+#include "app_cfg.h"
+#include "app_ipc.h"
 typedef enum {
     BTN_NONE = 0,
     BTN_LEFT = 1,
@@ -62,9 +53,9 @@ typedef struct {
 } GameSnapshot_t;
 
 /* Called only in the existing CubeMX-generated Start*Task wrappers. */
-void task_input_run(void *argument);
-void task_game_run(void *argument);
-void task_display_run(void *argument);
+#include "task_input.h"
+#include "task_game.h"
+#include "task_display.h"
 
 /* Called by DisplayTask only. Copies a snapshot without exposing game globals.
  * Returns 1 once the first frame is ready, else 0. */

@@ -1,18 +1,19 @@
 /* Task 1: active-low GPIO -> uint16_t events. Never interpret the game state. */
 #include "main.h"
+#include "hal_gpio.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "app_shared.h"
 #include "button_filter.h"
 #include "app_diagnostics.h"
-typedef struct { GPIO_TypeDef *port; uint16_t pin; uint8_t code; ButtonFilter filter; uint8_t pending; } Button;
+typedef struct { uint8_t code; ButtonFilter filter; uint8_t pending; } Button;
 static Button buttons[]={
- {LEFT_GPIO_Port,LEFT_Pin,BTN_LEFT,{0},0},
- {RIGHT_GPIO_Port,RIGHT_Pin,BTN_RIGHT,{0},0},
- {ROTATE_GPIO_Port,ROTATE_Pin,BTN_ROTATE,{0},0},
- {DOWN_GPIO_Port,DOWN_Pin,BTN_DOWN,{0},0},
- {PAUSE_GPIO_Port,PAUSE_Pin,BTN_PAUSE,{0},0},
- {HARD_DROP_GPIO_Port,HARD_DROP_Pin,BTN_DROP,{0},0}
+ {BTN_LEFT,{0},0},
+ {BTN_RIGHT,{0},0},
+ {BTN_ROTATE,{0},0},
+ {BTN_DOWN,{0},0},
+ {BTN_PAUSE,{0},0},
+ {BTN_DROP,{0},0}
 };
 void task_input_run(void *argument) {
     TickType_t last=xTaskGetTickCount();
@@ -25,7 +26,7 @@ void task_input_run(void *argument) {
             Button *b=&buttons[index];
             uint8_t repeat=(b->code==BTN_LEFT||b->code==BTN_RIGHT||b->code==BTN_DOWN);
             uint8_t event=button_filter_step(&b->filter,
-                HAL_GPIO_ReadPin(b->port,b->pin)==GPIO_PIN_RESET,repeat,now);
+                hal_button_pressed((uint8_t)index),repeat,now);
             uint16_t code=b->code;
             if (event==1U) {
                 if (b->pending) app_diagnostics.input_dropped++;

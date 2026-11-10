@@ -11,12 +11,12 @@
 
 | Mục | Byte |
 |---|---:|
-| text | 19.576 |
-| data | 160 |
+| text | 19.644 |
+| data | 136 |
 | bss (gồm vùng reserve heap/stack startup) | 14.984 |
-| Flash = text + data | 19.736 / 65.536 |
-| RAM = data + bss | 15.144 / 20.480 |
-| RAM còn lại theo linker | 5.336 |
+| Flash = text + data | 19.780 / 65.536 |
+| RAM = data + bss | 15.120 / 20.480 |
+| RAM còn lại theo linker | 5.360 |
 
 Heap FreeRTOS 8192 byte nằm trong bss; stack ba Task ứng dụng cấp phát từ heap này, không cộng hai lần. Idle/Timer service dùng stack tĩnh. Dung lượng dự trữ không chứng minh stack/heap runtime đạt tiêu chí.
 
@@ -29,3 +29,7 @@ Một số frame stack tĩnh GCC: task_game_run 40 byte, publish_snapshot 240 by
 - Host tests không mô phỏng HAL, scheduler, I2C/PWM hoặc bus recovery. I2C recovery và fault path cần kiểm thử board.
 
 Kết luận: nguồn tích hợp đã hoàn chỉnh để nhóm mở Keil, review và thử board. Chưa phải release đã nghiệm thu. Ghi bằng chứng vào bảng docs/BOARD_TEST.md trước khi chốt release/main.
+
+## Đối chiếu cấu trúc PDF
+
+Đã di chuyển source vào bsp/hal/middlewares/app và main.c ở gốc; bổ sung app_cfg.h, app_ipc.h, task_*.h. Chạy lại project checker, host tests ASan/UBSan và ARM GCC build sau khi di chuyển: PASS, không warning/error. Cấu trúc Keil và đường dẫn include/source đã kiểm tra; chưa chạy µVision/board.

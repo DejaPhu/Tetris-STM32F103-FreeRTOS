@@ -4,6 +4,7 @@ Comment trong nguồn giải thích mục đích, quyền sở hữu dữ liệu
 
 | Tệp | Vai trò / hàm chính |
 |---|---|
+| app_cfg.h / app_ipc.h / task_*.h | Cấu hình RTOS/chu kỳ, extern Queue, entry points không tạo Task mới |
 | app_shared.h | Contract: mã nút, FSM, snapshot, Queue handles do CubeMX tạo |
 | button_filter.c | `button_filter_step`: đổi mẫu thì ghi thời điểm; chỉ chấp nhận khi ổn định >=30 ms; phép trừ unsigned chịu wrap |
 | task_input.c | Quét active-low, retry press pending ưu tiên PAUSE, không block chờ Queue; repeat có thể bỏ khi đầy |
@@ -11,6 +12,7 @@ Comment trong nguồn giải thích mục đích, quyền sở hữu dữ liệu
 | game_fsm.c | `handle_button` diễn giải nút theo một trong tám trạng thái; bỏ repeat trong menu |
 | game_internal.h | Trạng thái engine riêng cho GameTask; Display không được đọc trực tiếp |
 | task_game.c | Giới hạn 16 sự kiện/lượt, bỏ sự kiện tồn khi đổi màn; publish bản sao và token; bảo vệ sao chép bằng critical section |
+| hal_gpio.c / board_pins.h | Đọc sáu nút active-low; BSP dẫn tới pin mapping chính thức |
 | hal_buzzer.c | PWM PSC=71 → 1 MHz; ARR=1 MHz/f−1, CCR≈50%; deadline kết thúc âm, không HAL_Delay |
 | hal_oled.c | SSD1306 page mode, địa chỉ HAL 0x3C<<1; packet 129 byte; bus recovery bounded, không reset bus từ Task khác |
 | ui_renderer.c | Font 5×7, framebuffer 1024 byte, bàn 3×3 pixel/ô, tám màn hình và next preview |

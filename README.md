@@ -4,7 +4,7 @@ Bản tích hợp có đầy đủ nguồn Keil, ba Task và module game/OLED/bu
 
 ## Mở project
 
-1. Checkout `integration/system-v1` hoặc tải ZIP của nhánh đó và giải nén toàn bộ. Giữ `app/` cùng cấp với `Teris/`.
+1. Checkout `develop` sau khi PR tích hợp được merge hoặc dùng `integration/system-v1` và giải nén toàn bộ. Giữ nguyên toàn bộ cây thư mục; xem [cấu trúc theo PDF](docs/REPO_STRUCTURE.md).
 2. Mở `Teris/MDK-ARM/Teris.uvprojx` bằng Keil µVision 5. Dùng Arm Compiler 5 phù hợp port FreeRTOS RVDS/ARM_CM3, bật C99 như project. Không chuyển Compiler 6 tự động.
 3. Target: STM32F103C8, IROM1 `0x08000000/0x10000`, IRAM1 `0x20000000/0x5000`; IROM1 Startup. Không dùng Flash 128 KB trên chip C8.
 4. Rebuild All, lưu Build Output và `.map`, sau đó nạp bằng ST-Link/SWD theo [hướng dẫn](docs/BOARD_TEST.md).
@@ -28,6 +28,7 @@ Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/P
 
 ## Kiến trúc
 
+- `bsp/` chứa pin/MCU; `hal/` chứa driver; `middlewares/` chứa CMSIS/FreeRTOS; `main.c` ở gốc; `app_cfg.h`, `app_ipc.h`, `task_*.h` là contract chung.
 - InputTask 10 ms: GPIO, debounce theo thời gian đủ 30 ms, auto-repeat 300/100 ms; giữ pending press khi Queue đầy, bỏ repeat có thống kê. Bộ đệm pending hữu hạn một press mỗi nút.
 - GameTask: engine + FSM + PWM; ngủ tối đa 20 ms và thức sớm theo deadline rơi. Chỉ Task này sửa dữ liệu game.
 - DisplayTask 160 ms: lấy token, sao chép snapshot trong critical section ngắn, render rồi truyền I2C; lỗi bus có clear tối đa 9 xung và retry sau 500 ms. Chưa đo timing bus trên phần cứng.
