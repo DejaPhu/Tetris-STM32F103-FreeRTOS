@@ -16,3 +16,13 @@ build/
 .DS_Store
 Thumbs.db
 # Keep *.ioc, .project and .cproject once Leader adds them
+
+# Keil generated outputs and per-user settings
+**/MDK-ARM/Teris/
+*.axf
+*.crf
+*.lnp
+*.htm
+*.lst
+*.uvguix.*
+*.uvoptx
