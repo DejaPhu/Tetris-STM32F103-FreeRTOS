@@ -1,8 +1,8 @@
 #ifndef APP_SHARED_H
 #define APP_SHARED_H
 
-/* Shared API contract. Owned by the team leader; the three members implement
- * one separate .c file each. Matches CMSIS-RTOS2 queues in Teris.ioc:
+/* Shared API contract for the three application Tasks and helper modules.
+ * Matches CMSIS-RTOS2 queues in Teris.ioc:
  * 16 x uint16_t input events, 1 x uint16_t frame notification. */
 
 #include <stdint.h>

@@ -1,3 +1,7 @@
+# Cập nhật integration
+
+Project Keil hiện đã được cấu hình memory/include và thêm nguồn ứng dụng. Ba wrappers đã nối module; xem README.md và docs/BOARD_TEST.md. Ghi chú bên dưới là lịch sử nhập nguồn gốc. Chưa chạy Keil/board cho bản tích hợp.
+
 # Trạng thái nhập nguồn Teris gốc
 
 Nguồn: Teris.zip do người dùng đính kèm. Giữ Core, Drivers (bao gồm CMSIS/Include), Middlewares, startup và project Keil gốc. Không dùng gói Keil_Teris_Git_Import.zip đã lọc. Giữ file Teris.ioc hiện có vì cấu hình tương đương bản gốc; không nhập Teris.uvoptx là cấu hình người dùng. Thư viện vendor và license được giữ lại.

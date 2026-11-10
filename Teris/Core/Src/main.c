@@ -22,6 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "app_shared.h"
+#include "app_diagnostics.h"
 
 /* USER CODE END Includes */
 
@@ -138,7 +140,7 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init scheduler */
-  osKernelInitialize();
+  if (osKernelInitialize()!=osOK) Error_Handler();
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -174,6 +176,8 @@ int main(void)
   DisplayTaskHandle = osThreadNew(StartDisplayTask, NULL, &DisplayTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
+  if (!xInputQueueHandle || !xFrameQueueHandle || !InputTaskHandle ||
+      !GameTaskHandle || !DisplayTaskHandle) app_fault(APP_FAULT_RTOS);
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
@@ -182,7 +186,7 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
-  osKernelStart();
+  if (osKernelStart()!=osOK) app_fault(APP_FAULT_RTOS);
 
   /* We should never get here as control is now taken by the scheduler */
 
@@ -402,11 +406,8 @@ static void MX_GPIO_Init(void)
 void StartInputTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+  /* Call the module in this existing CubeMX Task; never create a duplicate. */
+  task_input_run(argument);
   /* USER CODE END 5 */
 }
 
@@ -420,11 +421,8 @@ void StartInputTask(void *argument)
 void StartGameTask(void *argument)
 {
   /* USER CODE BEGIN StartGameTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+  /* Call the module in this existing CubeMX Task; never create a duplicate. */
+  task_game_run(argument);
   /* USER CODE END StartGameTask */
 }
 
@@ -438,11 +436,8 @@ void StartGameTask(void *argument)
 void StartDisplayTask(void *argument)
 {
   /* USER CODE BEGIN StartDisplayTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+  /* Call the module in this existing CubeMX Task; never create a duplicate. */
+  task_display_run(argument);
   /* USER CODE END StartDisplayTask */
 }
 

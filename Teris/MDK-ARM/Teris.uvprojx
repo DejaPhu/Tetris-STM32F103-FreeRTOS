@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="project_projx.xsd">
+<?xml version='1.0' encoding='utf-8'?>
+<Project noNamespaceSchemaLocation="project_projx.xsd">
   <SchemaVersion>2.1</SchemaVersion>
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
@@ -238,13 +238,13 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x5000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x08000000</StartAddress>
+                <Size>0x10000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -253,8 +253,8 @@
               </XRAM>
               <OCR_RVCT1>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x08000000</StartAddress>
+                <Size>0x10000</Size>
               </OCR_RVCT1>
               <OCR_RVCT2>
                 <Type>1</Type>
@@ -268,8 +268,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress />
-                <Size />
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x5000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -332,7 +332,7 @@
               <MiscControls />
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine />
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../../app/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,7 +350,7 @@
               <MiscControls />
               <Define />
               <Undefine />
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../../app/inc</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -558,6 +558,61 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>Application/Tetris</GroupName>
+          <Files>
+            <File>
+              <FileName>app_diagnostics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/app_diagnostics.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/button_filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>game_engine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/game_engine.c</FilePath>
+            </File>
+            <File>
+              <FileName>game_fsm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/game_fsm.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/hal_buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_oled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/hal_oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/task_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/task_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_input.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/task_input.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_renderer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/ui_renderer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -574,4 +629,3 @@
     <files />
   </RTE>
 </Project>
-
