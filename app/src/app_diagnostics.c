@@ -6,10 +6,12 @@
 #include "app_diagnostics.h"
 #include "app_log.h"
 #include "hal_uart.h"
+#include "hal_buzzer.h"
 volatile AppDiagnostics app_diagnostics;
 extern osThreadId_t InputTaskHandle,GameTaskHandle,DisplayTaskHandle;
 void app_fault(AppFault reason) {
     app_diagnostics.fault=reason;
+    buzzer_hold_idle(); /* Disconnect PWM and silence LOW-trigger module first. */
     app_log("FAULT",reason,0U,0U);
     uart_debug_panic_flush(); /* Best effort; Watch remains authoritative on fatal errors. */
     /* Stop PWM without using a blocking HAL API after a scheduler/memory failure. */

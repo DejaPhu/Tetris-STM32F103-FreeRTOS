@@ -13,7 +13,7 @@ Comment trong nguồn giải thích mục đích, quyền sở hữu dữ liệu
 | game_internal.h | Trạng thái engine riêng cho GameTask; Display không được đọc trực tiếp |
 | task_game.c | Giới hạn 16 sự kiện/lượt, bỏ sự kiện tồn khi đổi màn; publish bản sao và token; bảo vệ sao chép bằng critical section |
 | hal_gpio.c / board_pins.h | Đọc sáu nút active-low; BSP dẫn tới pin mapping chính thức |
-| hal_buzzer.c | PWM PSC=71 → 1 MHz; ARR=1 MHz/f−1, CCR≈50%; deadline kết thúc âm, không HAL_Delay |
+| hal_buzzer.c | PWM PSC=71 → 1 MHz; ARR=1 MHz/f−1, CCR≈50%; cực tính LOW cho module hiện tại, CCR=0 giữ HIGH khi tắt; deadline kết thúc âm, không HAL_Delay |
 | hal_oled.c | SSD1306 page mode, địa chỉ HAL 0x3C<<1; packet 129 byte; bus recovery bounded, không reset bus từ Task khác |
 | ui_renderer.c | Font 5×7, framebuffer 1024 byte, bàn 3×3 pixel/ô, tám màn hình và next preview |
 | task_display.c | Lấy token và snapshot, render/flush, giới hạn tốc độ 160 ms; backoff 500 ms khi lỗi |

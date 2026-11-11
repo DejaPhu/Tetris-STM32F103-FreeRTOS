@@ -24,6 +24,8 @@
 /* USER CODE BEGIN Includes */
 #include "app_shared.h"
 #include "app_diagnostics.h"
+#include "hal_buzzer.h"
+#include "buzzer_config.h"
 
 /* USER CODE END Includes */
 
@@ -120,6 +122,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  buzzer_hold_idle(); /* LOW-trigger module must be HIGH while booting. */
 
   /* USER CODE END Init */
 
@@ -310,7 +313,7 @@ static void MX_TIM4_Init(void)
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCPolarity = BUZZER_PWM_POLARITY;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {

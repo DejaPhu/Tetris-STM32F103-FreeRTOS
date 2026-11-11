@@ -24,7 +24,7 @@ Bàn 10×20, 7 khối, xoay/wall-kick đơn giản (không phải full SRS), xó
 | PAUSE | PA8 | Pause | Back/Resume |
 | HARD_DROP | PB10 | Hard drop | OK |
 
-Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/PB9 SDA, remap, 7-bit 0x3C, pull-up lên 3.3 V. Buzzer thụ động TIM4_CH1 PB6. UART PA9/PA10 115200; SWD PA13/PA14. Không đưa 5 V vào GPIO.
+Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/PB9 SDA, remap, 7-bit 0x3C, pull-up lên 3.3 V. Buzzer TIM4_CH1 PB6: bản này đã chỉnh cho module ba chân **kích LOW** người dùng xác nhận; xem [nối dây và giới hạn chủ động/thụ động](docs/BUZZER_MODULE.md). UART PA9/PA10 115200; SWD PA13/PA14. Không đưa 5 V vào GPIO.
 
 ## Kiến trúc
 

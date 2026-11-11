@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 /* USER CODE BEGIN Includes */
+#include "hal_buzzer.h"
 
 /* USER CODE END Includes */
 
@@ -175,29 +176,10 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
 
 }
 
+/* Keep PB6 at inactive GPIO level until buzzer_init starts TIM4 safely. */
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(htim->Instance==TIM4)
-  {
-    /* USER CODE BEGIN TIM4_MspPostInit 0 */
-
-    /* USER CODE END TIM4_MspPostInit 0 */
-
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**TIM4 GPIO Configuration
-    PB6     ------> TIM4_CH1
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    /* USER CODE BEGIN TIM4_MspPostInit 1 */
-
-    /* USER CODE END TIM4_MspPostInit 1 */
-  }
-
+  if(htim->Instance==TIM4) buzzer_hold_idle();
 }
 /**
   * @brief TIM_PWM MSP De-Initialization
