@@ -34,6 +34,8 @@ Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/P
 - DisplayTask 160 ms: lấy token, sao chép snapshot trong critical section ngắn, render rồi truyền I2C; lỗi bus có clear tối đa 9 xung và retry sau 500 ms. Chưa đo timing bus trên phần cứng.
 - Hai Queue giữ `16 × uint16_t` mã nút và `1 × uint16_t` token. Không truyền snapshot qua Queue. Idle/Timer service là Task nội bộ FreeRTOS.
 
+UART debug USART1 PA9/PA10 115200 8N1 đã được thêm; xem [nối USB–UART và đọc log](docs/UART_DEBUG.md). Không thêm Task/Queue.
+
 Xem [module và comment](docs/MODULES.md), [kiểm thử board](docs/BOARD_TEST.md), [kết quả kiểm chứng](docs/test-results/SYSTEM_V1.md). Không tự merge vào develop/main/release; integration là ứng viên để nhóm review.
 
 ## Kiểm tra bổ sung trên Linux

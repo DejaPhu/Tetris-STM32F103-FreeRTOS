@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "hal_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -174,5 +175,8 @@ void TIM2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+/* USART1 TX belongs to the debug ring; no FreeRTOS API is called in this ISR. */
+void USART1_IRQHandler(void) { uart_debug_irq(); }
+
 
 /* USER CODE END 1 */

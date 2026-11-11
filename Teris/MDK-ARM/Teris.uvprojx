@@ -596,6 +596,11 @@
               <FileType>1</FileType>
               <FilePath>../../app/src/ui_renderer.c</FilePath>
             </File>
+            <File>
+              <FileName>app_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../app/src/app_log.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -625,6 +630,11 @@
               <FileName>hal_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../hal/src/hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../hal/src/hal_uart.c</FilePath>
             </File>
           </Files>
         </Group>

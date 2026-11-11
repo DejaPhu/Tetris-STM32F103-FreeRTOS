@@ -22,4 +22,4 @@ Comment trong nguồn giải thích mục đích, quyền sở hữu dữ liệu
 
 Điểm dùng level **trước** khi xóa hàng. Level hiển thị bắt đầu 1, không làm thay đổi độ khó đã chọn. Pause/resume và sinh khối mới bắt đầu một khoảng rơi đầy đủ. Xoay O giữ nguyên vị trí; wall kick chỉ dịch ngang, không có floor kick/SRS đầy đủ.
 
-Không thêm Task UART riêng. Có thể dùng USART1 để debug sau này; bản này cung cấp telemetry qua Watch, chưa có giao thức log UART.
+Không thêm Task UART riêng. USART1 hiện xuất log bằng ring buffer 512 byte và ngắt TXE; formatter nhỏ app_log không dùng printf. Xem docs/UART_DEBUG.md. Telemetry qua Watch vẫn được giữ.
