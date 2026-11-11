@@ -4,10 +4,16 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "app_diagnostics.h"
+#include "app_log.h"
+#include "hal_uart.h"
+#include "hal_buzzer.h"
 volatile AppDiagnostics app_diagnostics;
 extern osThreadId_t InputTaskHandle,GameTaskHandle,DisplayTaskHandle;
 void app_fault(AppFault reason) {
     app_diagnostics.fault=reason;
+    buzzer_hold_idle(); /* Disconnect PWM and silence LOW-trigger module first. */
+    app_log("FAULT",reason,0U,0U);
+    uart_debug_panic_flush(); /* Best effort; Watch remains authoritative on fatal errors. */
     /* Stop PWM without using a blocking HAL API after a scheduler/memory failure. */
     TIM4->CCER &= ~TIM_CCER_CC1E;
     __HAL_RCC_TIM4_CLK_DISABLE();
@@ -25,6 +31,11 @@ void app_measure_game(uint32_t duration) {
     app_diagnostics.input_stack_free_words=uxTaskGetStackHighWaterMark((TaskHandle_t)InputTaskHandle);
     app_diagnostics.game_stack_free_words=uxTaskGetStackHighWaterMark((TaskHandle_t)GameTaskHandle);
     app_diagnostics.display_stack_free_words=uxTaskGetStackHighWaterMark((TaskHandle_t)DisplayTaskHandle);
+    app_log("HEAP",app_diagnostics.heap_free,app_diagnostics.heap_min,0U);
+    app_log("STACK_WORDS",app_diagnostics.input_stack_free_words,app_diagnostics.game_stack_free_words,app_diagnostics.display_stack_free_words);
+    app_log("INPUT_QUEUE",app_diagnostics.input_queue_full,app_diagnostics.input_dropped,0U);
+    app_log("TIMING_OLED",app_diagnostics.game_max_ms,app_diagnostics.display_max_ms,app_diagnostics.oled_errors);
+    { uint32_t lost,bytes; uart_debug_stats(&lost,&bytes);app_log("UART_TX",lost,bytes,0U); }
 }
 void app_measure_display(uint32_t duration,uint8_t ok) {
     if (duration>app_diagnostics.display_max_ms) app_diagnostics.display_max_ms=duration;

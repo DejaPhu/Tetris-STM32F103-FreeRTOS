@@ -6,6 +6,8 @@
 #include "game_internal.h"
 #include "hal_buzzer.h"
 #include "app_diagnostics.h"
+#include "app_log.h"
+#include "hal_uart.h"
 static GameSnapshot_t published;
 static uint8_t frame_available;
 uint32_t app_now_ms(void) { return HAL_GetTick(); }
@@ -14,6 +16,11 @@ static void publish_snapshot(void)
     GameSnapshot_t frame;
     uint8_t r,c;
     uint16_t token=1U;
+    static uint32_t last_state=0xffffffffUL,last_score=0xffffffffUL;
+    if(last_state!=(uint32_t)game.state || last_score!=game.score) {
+        app_log("GAME",game.state,game.score,game.difficulty);
+        last_state=game.state;last_score=game.score;
+    }
     memset(&frame,0,sizeof(frame));
     memcpy(frame.cells,game.board,sizeof(game.board));
     if(game.state==STATE_PLAYING || game.state==STATE_PAUSED) {
@@ -57,6 +64,8 @@ uint8_t app_game_copy_snapshot(GameSnapshot_t *out)
 
 void task_game_run(void *argument) {
     (void)argument;
+    uart_debug_init();
+    app_log("BOOT",115200U,3U,2U);
     game_init(app_now_ms());
     if (!buzzer_init()) app_fault(APP_FAULT_PWM);
     publish_snapshot();
@@ -66,6 +75,7 @@ void task_game_run(void *argument) {
         uint32_t began=app_now_ms();
         while (count++ < 16U && osMessageQueueGet(xInputQueueHandle,&raw,NULL,0U)==osOK) {
             GameState_t before=game.state;
+            if (!(raw & BUTTON_REPEAT_FLAG)) app_log("KEY_RX",raw,game.state,game.score);
             if (handle_button(raw)) changed=1U;
             if (game.state != before) {
                 /* Do not apply old queued gameplay presses to a new menu/round. */

@@ -22,3 +22,12 @@ for folder in ['app/src','hal/src']:
 print('PASS: Keil source/include/memory references; exactly 3 application Tasks, 2 queues, 1 kernel start')
 
 for folder in ["bsp/inc","bsp/src","hal/inc","hal/src","middlewares/FreeRTOS","app/inc","app/src"]:assert (r/folder).is_dir()
+
+irq=(r/'bsp/src/stm32f1xx_it.c').read_text()
+assert len(re.findall(r'void USART1_IRQHandler\s*\(void\)',irq))==1
+assert 'uart_debug_irq();' in irq
+print('PASS: USART1 handler linked to nonblocking debug driver; no new RTOS objects')
+
+assert 'sConfigOC.OCPolarity = BUZZER_PWM_POLARITY;' in (r/'main.c').read_text()
+assert 'if(htim->Instance==TIM4) buzzer_hold_idle();' in (r/'bsp/src/stm32f1xx_hal_msp.c').read_text()
+print('PASS: buzzer LOW-trigger polarity and GPIO idle until PWM startup')

@@ -24,7 +24,7 @@ Bàn 10×20, 7 khối, xoay/wall-kick đơn giản (không phải full SRS), xó
 | PAUSE | PA8 | Pause | Back/Resume |
 | HARD_DROP | PB10 | Hard drop | OK |
 
-Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/PB9 SDA, remap, 7-bit 0x3C, pull-up lên 3.3 V. Buzzer thụ động TIM4_CH1 PB6. UART PA9/PA10 115200; SWD PA13/PA14. Không đưa 5 V vào GPIO.
+Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/PB9 SDA, remap, 7-bit 0x3C, pull-up lên 3.3 V. Buzzer TIM4_CH1 PB6: bản này đã chỉnh cho module ba chân **kích LOW** người dùng xác nhận; xem [nối dây và giới hạn chủ động/thụ động](docs/BUZZER_MODULE.md). UART PA9/PA10 115200; SWD PA13/PA14. Không đưa 5 V vào GPIO.
 
 ## Kiến trúc
 
@@ -33,6 +33,8 @@ Nút nối xuống GND, active-low/pull-up. OLED SSD1306 128×64 I2C1: PB8 SCL/P
 - GameTask: engine + FSM + PWM; ngủ tối đa 20 ms và thức sớm theo deadline rơi. Chỉ Task này sửa dữ liệu game.
 - DisplayTask 160 ms: lấy token, sao chép snapshot trong critical section ngắn, render rồi truyền I2C; lỗi bus có clear tối đa 9 xung và retry sau 500 ms. Chưa đo timing bus trên phần cứng.
 - Hai Queue giữ `16 × uint16_t` mã nút và `1 × uint16_t` token. Không truyền snapshot qua Queue. Idle/Timer service là Task nội bộ FreeRTOS.
+
+UART debug USART1 PA9/PA10 115200 8N1 đã được thêm; xem [nối USB–UART và đọc log](docs/UART_DEBUG.md). Không thêm Task/Queue.
 
 Xem [module và comment](docs/MODULES.md), [kiểm thử board](docs/BOARD_TEST.md), [kết quả kiểm chứng](docs/test-results/SYSTEM_V1.md). Không tự merge vào develop/main/release; integration là ứng viên để nhóm review.
 

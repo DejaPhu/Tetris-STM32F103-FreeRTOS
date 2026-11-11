@@ -29,7 +29,7 @@ Fault: 1=RTOS object, 2=malloc, 3=stack overflow, 4=PWM start. Dừng tại app_
 | Xóa/điểm | 1/2/3/4 hàng: 100/300/500/800 × level trước clear; mốc 10 hàng | Chưa test |
 | Pause/menu | WELCOME → menu/help/difficulty → play → pause/resume/restart/menu | Chưa test |
 | WIN/thua | >=1000 → YOU WIN!, spawn bị chặn → GAME OVER; Retry reset điểm/board | Chưa test |
-| PWM | Oscilloscope PB6: 900/1500/350/2200 Hz theo hiệu ứng; duty khoảng 50%, tự tắt | Chưa test |
+| PWM | Oscilloscope PB6: xung PWM theo hiệu ứng, cực tính LOW; HIGH khi im lặng. Buzzer chủ động có cao độ riêng; xem docs/BUZZER_MODULE.md | Chưa test |
 | RAM/timing | Ghi heap_min, stack high-water, max task/flush; đo scheduling bằng GPIO nếu cần | Chưa test |
 | Chạy lâu | Chơi liên tục ít nhất 30 phút, thử nhiều retry/pause; không fault/mất phím | Chưa test |
 
